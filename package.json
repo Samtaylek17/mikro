@@ -2,9 +2,13 @@
   "name": "mikro",
   "version": "1.0.0",
   "description": "Phone book application",
-  "main": "index.js",
+  "main": "dist/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
+    "build": "tsc",
+    "prestart": "npm run build",
+    "start": "node dist/app.js",
     "dev": "nodemon dist/app.js"
   },
   "repository": {
@@ -37,7 +41,8 @@
     "nodemon": "^2.0.15",
     "prettier": "2.5.1",
     "pretty-quick": "^3.1.3",
-    "tslint": "^6.1.3"
+    "tslint": "^6.1.3",
+    "typescript": "^4.5.4"
   },
   "husky": {
     "hooks": {

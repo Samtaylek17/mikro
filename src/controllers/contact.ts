@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import * as EmailValidator from 'email-validator';
 import ContactModel from '../model/contact';
 

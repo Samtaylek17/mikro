@@ -1,7 +1,7 @@
 import uuid from 'uuid';
 import moment from 'moment';
 
-interface phoneBook {
+interface PhoneBook {
   readonly id: string;
   name: string;
   email: string;
@@ -11,7 +11,7 @@ interface phoneBook {
 }
 
 export default class ContactModel {
-  contacts: phoneBook[];
+  contacts: PhoneBook[];
 
   constructor() {
     this.contacts = [];
@@ -22,8 +22,8 @@ export default class ContactModel {
    * @param data
    * @returns {object} contact object
    */
-  create(data: { name: string; email: string; phoneNumber: string }): phoneBook {
-    const newContact: phoneBook = {
+  create(data: { name: string; email: string; phoneNumber: string }): PhoneBook {
+    const newContact: PhoneBook = {
       id: uuid.v4(),
       name: data.name,
       email: data.email,
@@ -40,7 +40,7 @@ export default class ContactModel {
    * @param {uuid} id
    * @returns {object} contact object
    */
-  findOne(id: string): phoneBook | undefined {
+  findOne(id: string): PhoneBook | undefined {
     return this.contacts.find((contact) => contact.id === id);
   }
 
@@ -48,14 +48,14 @@ export default class ContactModel {
    * @param {string} phoneNumber
    * @returns {object} contact object
    */
-  findOneByPhoneNumber(phoneNumber: string): phoneBook | undefined {
+  findOneByPhoneNumber(phoneNumber: string): PhoneBook | undefined {
     return this.contacts.find((contact) => contact.phoneNumber === phoneNumber);
   }
 
   /**
    * @returns {object} returns all contacts
    */
-  findAll(): phoneBook[] {
+  findAll(): PhoneBook[] {
     return this.contacts;
   }
 
