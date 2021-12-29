@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import * as EmailValidator from 'email-validator';
 import ContactModel from '../model/contact';
 
@@ -9,7 +9,7 @@ const Contact = {
    * @param {object} res
    * @returns {object} contact object
    */
-  create(req: Request, res: Response): object {
+  create(req: Request, res: Response, next: NextFunction): object {
     const name = (req.body as { name: string }).name;
     const email = (req.body as { email: string }).email;
     const phoneNumber = (req.body as { phoneNumber: string }).phoneNumber;
@@ -21,6 +21,12 @@ const Contact = {
     const validateEmail: boolean = EmailValidator.validate(email);
     if (validateEmail === true) {
       throw new Error('Enter a valid email address');
+    }
+
+    const phoneExist = new ContactModel().findOneByPhoneNumber(phoneNumber);
+
+    if (phoneExist !== undefined) {
+      throw new Error('Phone number already exist');
     }
 
     const user = { name, email, phoneNumber };
@@ -63,7 +69,7 @@ const Contact = {
    */
   getOneByPhoneNumber(req: Request, res: Response): object {
     const contact = new ContactModel().findOneByPhoneNumber((req.params as { phoneNumber: string }).phoneNumber);
-    if (!contact) {
+    if (contact === undefined) {
       return res.status(404).send({ message: 'contact not found' });
     }
     return res.status(200).send(contact);
